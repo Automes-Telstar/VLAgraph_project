@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#090d19"/>
+      <stop offset="100%" stop-color="#1b2d3f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <rect x="40" y="60" width="320" height="260" rx="20" fill="#101f2f" stroke="#80d7ff" stroke-opacity="0.5"/>
+  <rect x="430" y="50" width="310" height="280" rx="22" fill="#0e1e29" stroke="#7ef0ff" stroke-opacity="0.5"/>
+  <g transform="translate(100 110)">
+    <path d="M80 170 L200 70 L240 110 L120 210 Z" fill="#7fdcff" opacity="0.9"/>
+    <path d="M44 210 L190 210" stroke="#85e8d8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M100 208 L106 118" stroke="#82dbff" stroke-width="10" stroke-linecap="round"/>
+    <path d="M110 117 L180 140" stroke="#82dbff" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="236" cy="110" r="16" fill="#7fe7d8"/>
+  </g>
+  <g transform="translate(460 96)">
+    <rect x="0" y="0" width="250" height="160" rx="18" fill="#102330" stroke="#7ecfff"/>
+    <path d="M28 120 L84 120" stroke="#8ef0d3" stroke-width="8" stroke-linecap="round"/>
+    <path d="M120 120 L180 120" stroke="#8ed4ff" stroke-width="8" stroke-linecap="round"/>
+    <path d="M28 80 L110 80" stroke="#8d9cff" stroke-width="8" stroke-linecap="round"/>
+    <path d="M142 80 L220 80" stroke="#7ef0ff" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="30" cy="66" r="10" fill="#8ef0d3"/>
+    <circle cx="118" cy="66" r="10" fill="#8ed4ff"/>
+    <circle cx="180" cy="66" r="10" fill="#7ef0ff"/>
+  </g>
+  <rect x="90" y="320" width="600" height="16" rx="8" fill="#153a52"/>
+  <text x="470" y="252" fill="#d9ecff" font-family="Arial" font-size="26" font-weight="700">ROS TOPICS</text>
+</svg>

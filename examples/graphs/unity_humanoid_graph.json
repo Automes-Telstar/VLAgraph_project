@@ -1,0 +1,204 @@
+{
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "prompt",
+      "position": { "x": 80, "y": 100 },
+      "data": {
+        "label": "Prompt Node",
+        "text": "walk to the checkpoint and turn slightly left"
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "image_input",
+      "position": { "x": 80, "y": 260 },
+      "data": {
+        "label": "Image Input Node",
+        "imageUrl": "/sample.png"
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "robot_state",
+      "position": { "x": 80, "y": 420 },
+      "data": {
+        "label": "Robot State Node",
+        "robotState": {
+          "robot_type": "humanoid",
+          "controller_mode": "locomotion",
+          "position": [0.0, 0.0, 0.0],
+          "forward": [0.0, 0.0, 1.0],
+          "velocity": [0.0, 0.0, 0.0],
+          "is_grounded": true
+        }
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "openvla_infer",
+      "position": { "x": 440, "y": 250 },
+      "data": {
+        "label": "OpenVLA Infer Node",
+        "modelName": "openvla-stub"
+      }
+    },
+    {
+      "id": "node-5",
+      "type": "action_decode",
+      "position": { "x": 780, "y": 250 },
+      "data": {
+        "label": "Action Decode Node",
+        "decodeMode": "default"
+      }
+    },
+    {
+      "id": "node-6",
+      "type": "safety_clamp",
+      "position": { "x": 1120, "y": 250 },
+      "data": {
+        "label": "Safety Clamp Node",
+        "enabled": true,
+        "maxDelta": 0.5
+      }
+    },
+    {
+      "id": "node-7",
+      "type": "robot_execute",
+      "position": { "x": 1460, "y": 250 },
+      "data": {
+        "label": "Robot Execute Node",
+        "executor": "robot-executor",
+        "mode": "unity",
+        "unityEndpoint": "ws://host.docker.internal:9081/robot",
+        "unityScene": "Campus",
+        "unityObject": "Humanoid01",
+        "unityCommand": "apply_humanoid_step",
+        "unityRobotType": "humanoid",
+        "unityControllerMode": "locomotion",
+        "unityTimeoutSec": 15,
+        "unityStateClientId": "humanoid01",
+        "omniverseEndpoint": "ws://host.docker.internal:9900/omniverse",
+        "omniverseUrl": "omniverse://localhost/Projects/Robot",
+        "omniverseStage": "/World/RobotStage",
+        "omniversePrimPath": "/World/Robot",
+        "omniverseCommand": "execute_policy",
+        "omniverseTimeoutSec": 15
+      }
+    },
+    {
+      "id": "node-8",
+      "type": "print",
+      "position": { "x": 1800, "y": 250 },
+      "data": {
+        "label": "Print Node"
+      }
+    },
+    {
+      "id": "node-9",
+      "type": "sensor_remote_lidar",
+      "position": { "x": 80, "y": 600 },
+      "data": {
+        "label": "Unity LiDAR Sensor",
+        "remoteLidarUrl": "http://localhost:9000/api/unity/lidar?client_id=humanoid01",
+        "lidarFormat": "auto",
+        "lidarObstacleDistance": 1.0,
+        "remoteMethod": "GET",
+        "remoteHeaders": {},
+        "remoteBody": {},
+        "requestTimeoutSec": 10
+      }
+    },
+    {
+      "id": "node-10",
+      "type": "print",
+      "position": { "x": 440, "y": 600 },
+      "data": {
+        "label": "Print LiDAR"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1-4",
+      "source": "node-1",
+      "target": "node-4",
+      "sourceHandle": "text",
+      "targetHandle": "prompt",
+      "animated": true,
+      "style": { "stroke": "#94a3b8", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e2-4",
+      "source": "node-2",
+      "target": "node-4",
+      "sourceHandle": "image",
+      "targetHandle": "image",
+      "animated": true,
+      "style": { "stroke": "#60a5fa", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e3-4",
+      "source": "node-3",
+      "target": "node-4",
+      "sourceHandle": "state",
+      "targetHandle": "state",
+      "animated": true,
+      "style": { "stroke": "#a78bfa", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e9-4",
+      "source": "node-9",
+      "target": "node-4",
+      "sourceHandle": "lidar",
+      "targetHandle": "lidar",
+      "animated": true,
+      "style": { "stroke": "#a78bfa", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e4-5",
+      "source": "node-4",
+      "target": "node-5",
+      "sourceHandle": "action",
+      "targetHandle": "action",
+      "animated": true,
+      "style": { "stroke": "#c084fc", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e5-6",
+      "source": "node-5",
+      "target": "node-6",
+      "sourceHandle": "decoded",
+      "targetHandle": "action",
+      "animated": true,
+      "style": { "stroke": "#10b981", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e6-7",
+      "source": "node-6",
+      "target": "node-7",
+      "sourceHandle": "safe_action",
+      "targetHandle": "action",
+      "animated": true,
+      "style": { "stroke": "#f59e0b", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e7-8",
+      "source": "node-7",
+      "target": "node-8",
+      "sourceHandle": "result",
+      "targetHandle": "input",
+      "animated": true,
+      "style": { "stroke": "#cbd5e1", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e9-10",
+      "source": "node-9",
+      "target": "node-10",
+      "sourceHandle": "lidar",
+      "targetHandle": "input",
+      "animated": true,
+      "style": { "stroke": "#a78bfa", "strokeWidth": 1.5 }
+    }
+  ]
+}

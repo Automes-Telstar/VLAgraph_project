@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#060d14"/>
+      <stop offset="100%" stop-color="#1a3046"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <g transform="translate(60 90)">
+    <rect x="0" y="0" width="240" height="210" rx="18" fill="#0d1d2b" stroke="#75d6ff" stroke-opacity="0.5"/>
+    <path d="M68 156 L158 56 L196 96 L110 196 Z" fill="#7fe8ff" opacity="0.85"/>
+    <path d="M38 196 L168 196" stroke="#81efd2" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="196" cy="96" r="16" fill="#8aeaff"/>
+  </g>
+  <g transform="translate(330 90)">
+    <rect x="0" y="0" width="180" height="210" rx="18" fill="#0d1d2b" stroke="#7fd0ff" stroke-opacity="0.5"/>
+    <path d="M32 160 L110 70 L150 106 L70 200 Z" fill="#7fd7ff" opacity="0.8"/>
+    <path d="M50 122 L110 122" stroke="#88efdb" stroke-width="8" stroke-linecap="round"/>
+    <path d="M30 154 L60 154" stroke="#88efdb" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(545 90)">
+    <rect x="0" y="0" width="170" height="210" rx="18" fill="#0d1d2b" stroke="#7fd0ff" stroke-opacity="0.5"/>
+    <circle cx="88" cy="84" r="34" fill="#8feeff" opacity="0.9"/>
+    <path d="M26 166 L148 166" stroke="#87efce" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="88" cy="84" r="56" fill="none" stroke="#7dbdff" stroke-width="4" stroke-dasharray="10 12"/>
+  </g>
+  <text x="66" y="350" fill="#dfeeff" font-family="Arial" font-size="24" font-weight="700">ROBOT-SPECIFIC LOGIC</text>
+</svg>

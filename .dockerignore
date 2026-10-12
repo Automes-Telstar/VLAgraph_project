@@ -1,0 +1,14 @@
+.git
+.env
+.DS_Store
+._*
+**/.DS_Store
+**/._*
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/node_modules/
+**/dist/
+clean_env/
+venv/
+uploads/

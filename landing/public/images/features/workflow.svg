@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#080d10"/>
+      <stop offset="100%" stop-color="#172a3b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <g transform="translate(60 70)">
+    <rect x="0" y="90" width="144" height="80" rx="18" fill="#101f2d" stroke="#7fe1ff"/>
+    <rect x="190" y="40" width="144" height="80" rx="18" fill="#101f2d" stroke="#7fe1ff"/>
+    <rect x="190" y="170" width="144" height="80" rx="18" fill="#101f2d" stroke="#7fe1ff"/>
+    <rect x="380" y="90" width="144" height="80" rx="18" fill="#101f2d" stroke="#7fe1ff"/>
+    <rect x="570" y="90" width="144" height="80" rx="18" fill="#101f2d" stroke="#7fe1ff"/>
+    <path d="M144 130 L190 130" stroke="#7fe1ff" stroke-width="6" stroke-linecap="round"/>
+    <path d="M334 80 L380 130" stroke="#7fe1ff" stroke-width="6" stroke-linecap="round"/>
+    <path d="M334 210 L380 130" stroke="#7fe1ff" stroke-width="6" stroke-linecap="round"/>
+    <path d="M524 130 L570 130" stroke="#7fe1ff" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="144" cy="130" r="10" fill="#7fe1ff"/>
+    <circle cx="334" cy="80" r="10" fill="#7fe1ff"/>
+    <circle cx="334" cy="210" r="10" fill="#7fe1ff"/>
+    <circle cx="524" cy="130" r="10" fill="#7fe1ff"/>
+  </g>
+  <text x="220" y="350" fill="#e1efff" font-family="Arial" font-size="24" font-weight="700">GRAPH TEMPLATE / DEMO LOOP</text>
+</svg>

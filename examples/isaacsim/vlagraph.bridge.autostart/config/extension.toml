@@ -1,0 +1,8 @@
+[package]
+version = "0.1.0"
+title = "VLA Graph Bridge Autostart"
+description = "Starts the VLA Graph Isaac Sim bridge on port 9900."
+category = "VLA Graph"
+
+[[python.module]]
+name = "vlagraph_bridge_autostart"

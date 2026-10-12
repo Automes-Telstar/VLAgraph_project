@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "prompt",
+      "position": { "x": 80, "y": 120 },
+      "data": {
+        "label": "Prompt Node",
+        "text": "step the Isaac Lab environment"
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "action_decode",
+      "position": { "x": 420, "y": 120 },
+      "data": {
+        "label": "Action Decode Node",
+        "decodeMode": "raw",
+        "action": {
+          "isaaclab_action": [0.0]
+        }
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "robot_execute",
+      "position": { "x": 760, "y": 120 },
+      "data": {
+        "label": "Isaac Lab Step",
+        "executor": "robot-executor",
+        "mode": "omniverse",
+        "dryRun": false,
+        "omniverseEndpoint": "ws://host.docker.internal:9900/omniverse",
+        "omniverseStage": "/World",
+        "omniversePrimPath": "/World",
+        "omniverseCommand": "isaaclab_step",
+        "omniverseWaitForResponse": true,
+        "omniverseTimeoutSec": 30
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "print",
+      "position": { "x": 1100, "y": 120 },
+      "data": {
+        "label": "Print Node"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e2-3",
+      "source": "node-2",
+      "target": "node-3",
+      "sourceHandle": "decoded",
+      "targetHandle": "action",
+      "animated": true,
+      "style": { "stroke": "#10b981", "strokeWidth": 1.5 }
+    },
+    {
+      "id": "e3-4",
+      "source": "node-3",
+      "target": "node-4",
+      "sourceHandle": "result",
+      "targetHandle": "input",
+      "animated": true,
+      "style": { "stroke": "#cbd5e1", "strokeWidth": 1.5 }
+    }
+  ]
+}

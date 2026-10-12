@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#09151a"/>
+      <stop offset="100%" stop-color="#193447"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <rect x="80" y="90" width="250" height="210" rx="18" fill="#0e1d29" stroke="#7fdcff" stroke-opacity="0.5"/>
+  <rect x="380" y="90" width="300" height="210" rx="18" fill="#0e1d29" stroke="#7fdcff" stroke-opacity="0.5"/>
+  <g transform="translate(110 130)">
+    <rect x="0" y="0" width="70" height="70" rx="12" fill="#87e8ff" opacity="0.8"/>
+    <rect x="90" y="30" width="68" height="68" rx="12" fill="#7cebca" opacity="0.8"/>
+    <rect x="160" y="0" width="70" height="70" rx="12" fill="#8db4ff" opacity="0.8"/>
+    <path d="M26 150 L118 76 L200 150" fill="none" stroke="#8feeff" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(420 120)">
+    <path d="M20 120 L120 40 L220 120 L120 200 Z" fill="none" stroke="#8eedff" stroke-width="5"/>
+    <circle cx="120" cy="120" r="18" fill="#8ff0d3"/>
+    <circle cx="80" cy="90" r="8" fill="#8ff0d3"/>
+    <circle cx="160" cy="90" r="8" fill="#8ff0d3"/>
+    <circle cx="120" cy="60" r="8" fill="#8ff0d3"/>
+    <path d="M50 160 L200 160" stroke="#93a8ff" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <text x="60" y="350" fill="#dfeeff" font-family="Arial" font-size="24" font-weight="700">SPACE MEMORY + RAG</text>
+</svg>

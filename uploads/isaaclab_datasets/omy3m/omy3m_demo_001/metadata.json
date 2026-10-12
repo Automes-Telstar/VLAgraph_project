@@ -1,0 +1,27 @@
+{
+  "schema": "vlagraph.isaaclab.omy3m.v1",
+  "episode": "omy3m_demo_001",
+  "embodiment": "OMY3M_6DOF",
+  "joint_names": [
+    "joint1",
+    "joint2",
+    "joint3",
+    "joint4",
+    "joint5",
+    "joint6"
+  ],
+  "observation_keys": [
+    "state_before.joint_positions",
+    "state_before.joint_velocities",
+    "state_after.joint_positions",
+    "state_after.joint_velocities",
+    "state_after.eef_pose",
+    "wrist_camera_rgb"
+  ],
+  "action_keys": [
+    "joint_positions",
+    "gripper_position"
+  ],
+  "steps_file": "/tmp/openvla_uploads/isaaclab_datasets/omy3m/omy3m_demo_001/steps.jsonl",
+  "updated_at": 1785385274.7344248
+}

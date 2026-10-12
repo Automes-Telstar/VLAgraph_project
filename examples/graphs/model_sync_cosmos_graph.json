@@ -1,0 +1,35 @@
+{
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "model_sync",
+      "position": { "x": 120, "y": 180 },
+      "data": {
+        "label": "Sync Cosmos Model",
+        "sourcePath": "/host_downloads/Cosmos-Reason2-2B",
+        "targetName": "Cosmos-Reason2-2B",
+        "overwrite": false,
+        "requiredFiles": "config.json"
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "print",
+      "position": { "x": 520, "y": 180 },
+      "data": {
+        "label": "Print Sync Result"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1-2",
+      "source": "node-1",
+      "target": "node-2",
+      "sourceHandle": "status",
+      "targetHandle": "input",
+      "animated": true,
+      "style": { "stroke": "#cbd5e1", "strokeWidth": 1.5 }
+    }
+  ]
+}

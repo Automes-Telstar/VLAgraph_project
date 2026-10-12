@@ -1,0 +1,7 @@
+<svg width="300" height="84" viewBox="0 0 300 84" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="84" rx="12" fill="#f4f6f5"/>
+  <g transform="translate(18 18)" fill="#161b1f">
+    <path d="M25 0 14 6v8L3 20l11 6v8l11 6 11-6v-8l11-6-11-6V6L25 0Zm0 8 6 3.4-6 3.3-6-3.3L25 8Zm-13 16-6-3.3 6-3.4v6.7Zm16 8-3 1.7-3-1.7v-6.8l6-3.3v10.1Zm10-8v-6.7l6 3.4-6 3.3Z"/>
+  </g>
+  <text x="86" y="53" fill="#161b1f" font-family="Arial, sans-serif" font-size="30" font-weight="800">UNITY</text>
+</svg>

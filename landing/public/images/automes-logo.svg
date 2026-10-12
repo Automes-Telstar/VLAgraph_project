@@ -1,0 +1,19 @@
+<svg width="700" height="200" viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0d63ff"/>
+      <stop offset="100%" stop-color="#1a86ff"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0%" stop-color="#1f3fb8"/>
+      <stop offset="100%" stop-color="#081b59"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="200" fill="none"/>
+  <g transform="translate(20,18)">
+    <text x="0" y="98" font-size="86" font-family="Arial, Helvetica, sans-serif" font-weight="900" fill="url(#g1)" letter-spacing="-4">AUTO</text>
+    <text x="297" y="98" font-size="86" font-family="Arial, Helvetica, sans-serif" font-weight="900" fill="url(#g2)" letter-spacing="-4">MES</text>
+    <rect x="0" y="116" width="416" height="10" rx="5" fill="#1e6eff" opacity="0.75"/>
+    <text x="0" y="165" font-size="24" font-family="Arial, Helvetica, sans-serif" font-weight="700" letter-spacing="8" fill="#2045a4">INNOVATION</text>
+  </g>
+</svg>

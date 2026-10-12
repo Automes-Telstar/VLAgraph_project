@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#07131d"/>
+      <stop offset="100%" stop-color="#162d46"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0%" stop-color="#1d3155" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#374f72" stop-opacity="0.5"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0" x2="1">
+      <stop offset="0%" stop-color="#7ff5ff"/>
+      <stop offset="100%" stop-color="#3dc0ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <rect x="50" y="200" width="500" height="150" rx="24" fill="url(#panel)"/>
+  <rect x="82" y="232" width="120" height="90" rx="16" fill="#0c1d2b" stroke="#5ce1ff" stroke-opacity="0.7"/>
+  <rect x="214" y="232" width="120" height="90" rx="16" fill="#0c1d2b" stroke="#7efacb" stroke-opacity="0.7"/>
+  <rect x="346" y="232" width="120" height="90" rx="16" fill="#0c1d2b" stroke="#ffcc66" stroke-opacity="0.7"/>
+  <circle cx="145" cy="277" r="26" fill="none" stroke="url(#cyan)" stroke-width="8"/>
+  <circle cx="277" cy="277" r="26" fill="none" stroke="#7efacb" stroke-width="8"/>
+  <path d="M400 264 L456 264 L470 250 L470 295 L456 282 L400 282 Z" fill="#91d5ff" opacity="0.72"/>
+  <g transform="translate(520 90)">
+    <path d="M60 180 L180 70 L210 100 L90 220 Z" fill="#7dd8ff" opacity="0.9"/>
+    <circle cx="214" cy="100" r="18" fill="#9be8ff"/>
+    <path d="M20 220 L170 220" stroke="#7ee7d7" stroke-width="10" stroke-linecap="round"/>
+    <path d="M84 206 L128 120" stroke="#8df3ff" stroke-width="10" stroke-linecap="round"/>
+    <path d="M128 120 L170 150" stroke="#8df3ff" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.75">
+    <path d="M90 140 L200 140" stroke="#8eccff" stroke-width="3" stroke-dasharray="7 8"/>
+    <path d="M250 120 L360 120" stroke="#8ef6d5" stroke-width="3" stroke-dasharray="7 8"/>
+    <path d="M390 140 L500 140" stroke="#ffd67d" stroke-width="3" stroke-dasharray="7 8"/>
+  </g>
+  <g>
+    <circle cx="90" cy="140" r="7" fill="#8af7ff"/>
+    <circle cx="250" cy="120" r="7" fill="#8ef6d5"/>
+    <circle cx="390" cy="140" r="7" fill="#ffd67d"/>
+  </g>
+</svg>

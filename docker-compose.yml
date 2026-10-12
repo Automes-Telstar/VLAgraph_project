@@ -1,0 +1,220 @@
+﻿services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: openvla_frontend
+    ports:
+      - "9173:9173"
+    environment:
+      VITE_API_BASE: http://localhost:9000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: vlagraph_backend:local
+    container_name: openvla_backend
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    environment:
+      ROUTE_STT: http://stt_real:9090
+      ROUTE_TTS_STUB: http://tts_stub:9091
+      ROUTE_TTS_REAL: http://tts_real:9091
+      ROUTE_GR00T_STUB: http://gr00t_stub:9070
+      ROUTE_GR00T_REAL: http://gr00t_policy_adapter:9072
+      GR00T_FALLBACK_TO_STUB: "true"
+      MODEL_STORE_DIR: /models
+      MODEL_IMPORT_ROOTS: /host_downloads,/tmp/openvla_uploads,/models
+      MODEL_IMPORT_WINDOWS_DOWNLOADS: C:/Users/0/Downloads
+      MODEL_IMPORT_DOWNLOADS_MOUNT: /host_downloads
+      VLAGRAPH_OMNIVERSE_HOSTS: 172.16.110.116
+      RGBD_RETARGET_FORWARD_SIGN: "-1"
+      RGBD_RETARGET_UPPER_FORWARD_SIGN: "-1"
+    volumes:
+      - ./uploads:/tmp/openvla_uploads
+      - gr00t_models:/models
+      - C:/Users/0/Downloads:/host_downloads:ro
+    depends_on:
+      - vla_stub
+      - gr00t_stub
+      - openvla_real
+      - finetune_stub
+      - stt_real
+      - tts_stub
+    restart: unless-stopped
+
+  realsense_d435i_bridge:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: vlagraph_backend:local
+    container_name: realsense_d435i_bridge
+    profiles:
+      - linux-usb-realsense
+    command: >
+      python /app/scripts/realsense_d435i_bridge.py
+      --host 0.0.0.0
+      --port 9180
+      --width 640
+      --height 480
+      --fps 30
+      --mock-when-unavailable
+      --reconnect-interval-sec 1.0
+      --frame-cache-ttl-sec 0.06
+    ports:
+      - "9180:9180"
+    privileged: true
+    devices:
+      - "/dev/bus/usb:/dev/bus/usb"
+    volumes:
+      - /run/udev:/run/udev:ro
+    restart: unless-stopped
+
+  vla_stub:
+    build:
+      context: ./services/vla_stub
+      dockerfile: Dockerfile
+    container_name: vla_stub
+    ports:
+      - "9061:9060"
+    restart: unless-stopped
+
+  gr00t_stub:
+    build:
+      context: ./services/gr00t_stub
+      dockerfile: Dockerfile
+    container_name: gr00t_stub
+    ports:
+      - "9071:9070"
+    restart: unless-stopped
+
+  gr00t_policy_adapter:
+    image: vlagraph_gr00t_runtime:local
+    container_name: gr00t_policy_adapter
+    profiles:
+      - gr00t-real
+    ports:
+      - "9072:9072"
+    depends_on:
+      - gr00t_policy_server
+    environment:
+      GR00T_POLICY_HOST: gr00t_policy_server
+      GR00T_POLICY_PORT: "5555"
+      GR00T_POLICY_STRICT: "false"
+      GR00T_MODEL_PATH: /models/GR00T-N1.7-3B
+      GR00T_EMBODIMENT_KEY: real_g1_relative_eef_relative_joints
+      GR00T_IMAGE_SIZE: "256"
+      GR00T_CAMERA_KEY: ego_view
+      GR00T_LANGUAGE_KEY: annotation.human.task_description
+    volumes:
+      - gr00t_models:/models:ro
+      - ./services/gr00t_policy_adapter:/app/gr00t_policy_adapter:ro
+    command: >
+      bash -lc "uv pip install --python /workspace/.venv/bin/python -r /app/gr00t_policy_adapter/requirements.txt &&
+      cd /app/gr00t_policy_adapter &&
+      /workspace/.venv/bin/python -m uvicorn gr00t_http_adapter:app --host 0.0.0.0 --port 9072"
+    restart: unless-stopped
+
+  gr00t_policy_server:
+    build:
+      context: ../Isaac-GR00T
+      dockerfile: docker/Dockerfile
+    image: vlagraph_gr00t_runtime:local
+    container_name: gr00t_policy_server
+    profiles:
+      - gr00t-real
+    ports:
+      - "5555:5555"
+    gpus: all
+    ipc: host
+    environment:
+      GR00T_MODEL_PATH: /models/GR00T-N1.7-3B
+      GR00T_BACKBONE_MODEL_PATH: /models/Cosmos-Reason2-2B
+      GR00T_EMBODIMENT_TAG: REAL_G1
+      GR00T_DEVICE: cuda
+      GR00T_POLICY_HOST: 0.0.0.0
+      GR00T_POLICY_PORT: "5555"
+      GR00T_POLICY_STRICT: "false"
+      HF_HOME: /tmp/huggingface
+      TRANSFORMERS_CACHE: /tmp/huggingface/transformers
+      HF_HUB_CACHE: /tmp/huggingface/hub
+    volumes:
+      - gr00t_models:/models:ro
+      - ./services/gr00t_policy_server:/app/gr00t_policy_server:ro
+    command: >
+      bash -lc "python /app/gr00t_policy_server/start_policy_server.py"
+    restart: unless-stopped
+
+  openvla_real:
+    build:
+      context: ./services/openvla_real
+      dockerfile: Dockerfile
+    container_name: openvla_real
+    ports:
+      - "9060:9060"
+    gpus: all
+    environment:
+      OPENVLA_MODEL_NAME: openvla/openvla-7b
+      DEVICE: cuda:0
+      DTYPE: bfloat16
+      ATTN_IMPLEMENTATION: ""
+      PRELOAD_MODEL: "false"
+      AUTO_WARMUP: "false"
+      OPENVLA_UNNORM_KEY: bridge_orig
+      IMAGE_DOWNLOAD_TIMEOUT_SEC: "10"
+      LOG_LEVEL: INFO
+    volumes:
+      - openvla_real_hf_cache:/root/.cache/huggingface
+    restart: unless-stopped
+
+  finetune_stub:
+    build:
+      context: ./services/finetune_stub
+      dockerfile: Dockerfile
+    container_name: finetune_stub
+    ports:
+      - "9040:9040"
+    restart: unless-stopped
+
+  stt_real:
+    build:
+      context: ./services/stt_real
+      dockerfile: Dockerfile
+    container_name: stt_real
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  tts_real:
+    build:
+      context: ./services/tts_real
+      dockerfile: Dockerfile
+    container_name: tts_real
+    profiles:
+      - tts-real
+    ports:
+      - "9092:9091"
+    environment:
+      TTS_MODEL: tts_models/ko/ct2/tts_transformer
+    restart: unless-stopped
+
+  tts_stub:
+    build:
+      context: ./services/tts_stub
+      dockerfile: Dockerfile
+    container_name: tts_stub
+    ports:
+      - "9091:9091"
+    restart: unless-stopped
+
+volumes:
+  openvla_real_hf_cache:
+  gr00t_models:
+    external: true
+    name: vlagraph_gr00t_models

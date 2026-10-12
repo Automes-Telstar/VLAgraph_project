@@ -1,0 +1,47 @@
+// components/nodes/index.ts
+import GenericNode from "./GenericNode";
+import SpeechToTextNode from "./audio/SpeechToTextNode";
+import TextToSpeechNode from "./audio/TextToSpeechNode";
+import SensorInputNode from "./sensor/SensorInputNode";
+
+export const nodeTypes = {
+  prompt: GenericNode,
+  image_input: GenericNode,
+  sensor_input: SensorInputNode,
+  sensor_camera: SensorInputNode,
+  sensor_remote_image: SensorInputNode,
+  sensor_remote_lidar: SensorInputNode,
+  sensor_fused: SensorInputNode,
+  realsense_d435i_sensor: GenericNode,
+  mediapipe_pose: GenericNode,
+  rgbd_pose_fusion: GenericNode,
+  video_motion_input: GenericNode,
+  motion_extract: GenericNode,
+  motion_retarget: GenericNode,
+  scene_scan: GenericNode,
+  scene_context_reset: GenericNode,
+  spatial_memory_save: GenericNode,
+  spatial_rag_retrieve: GenericNode,
+  spatial_context_builder: GenericNode,
+  robot_state: GenericNode,
+  unity_state: GenericNode,
+  openvla_infer: GenericNode,
+  gr00t_infer: GenericNode,
+  action_decode: GenericNode,
+  g1_skill_decode: GenericNode,
+  safety_clamp: GenericNode,
+  robot_execute: GenericNode,
+  omy3m_joint_action: GenericNode,
+  omy3m_isaaclab_record: GenericNode,
+  fanuc_ls_parse: GenericNode,
+  fanuc_m710_prepare: GenericNode,
+  fanuc_omy3m_retarget: GenericNode,
+  fanuc_omy3m_isaaclab_export: GenericNode,
+  dataset_upload: GenericNode,
+  dataset_preview: GenericNode,
+  model_sync: GenericNode,
+  openvla_finetune: GenericNode,
+  speech_to_text: SpeechToTextNode,
+  text_to_speech: TextToSpeechNode,
+  print: GenericNode,
+};

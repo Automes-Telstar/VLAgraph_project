@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#050d13"/>
+      <stop offset="100%" stop-color="#142633"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0%" stop-color="#1a2b39"/>
+      <stop offset="100%" stop-color="#283d53"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <rect x="32" y="40" width="330" height="320" rx="22" fill="url(#panel)" stroke="#9cdcff" stroke-opacity="0.4"/>
+  <rect x="430" y="62" width="310" height="260" rx="22" fill="#0e1d2a" stroke="#75d5ff" stroke-opacity="0.4"/>
+  <g transform="translate(75 95)">
+    <rect x="0" y="0" width="180" height="110" rx="16" fill="#0a1723" stroke="#7ef0ff"/>
+    <circle cx="52" cy="60" r="28" fill="#8fe9ff" opacity="0.9"/>
+    <path d="M110 35 L172 35 L201 60 L172 85 L110 85 Z" fill="#76d0ea" opacity="0.75"/>
+    <text x="24" y="160" fill="#dfefff" font-family="Arial" font-size="28" font-weight="700">COMMAND</text>
+  </g>
+  <g transform="translate(500 120)">
+    <path d="M120 120 L220 20 L250 42 L150 140 Z" fill="#7ef0ff" opacity="0.9"/>
+    <path d="M82 150 L220 150" stroke="#7ef0ff" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="224" cy="42" r="18" fill="#8ef4ff"/>
+    <text x="14" y="202" fill="#dfefff" font-family="Arial" font-size="28" font-weight="700">PICK CUP</text>
+  </g>
+  <path d="M300 220 C350 160, 395 160, 430 190" fill="none" stroke="#6ce0ff" stroke-width="8" stroke-linecap="round"/>
+  <path d="M300 220 C350 280, 395 280, 430 250" fill="none" stroke="#7fe7a6" stroke-width="8" stroke-linecap="round"/>
+  <g transform="translate(110 260)">
+    <rect x="0" y="0" width="220" height="60" rx="15" fill="#0e1d2a" stroke="#72d6ff"/>
+    <rect x="20" y="18" width="90" height="22" rx="10" fill="#77ffcf"/>
+    <rect x="130" y="18" width="60" height="22" rx="10" fill="#6fd1ff"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg width="300" height="84" viewBox="0 0 300 84" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="84" rx="12" fill="#f4f6f5"/>
+  <g transform="translate(18 18)" fill="none" stroke="#1d9bd1" stroke-width="4">
+    <circle cx="24" cy="24" r="20"/>
+    <circle cx="24" cy="24" r="6" fill="#1d9bd1"/>
+    <path d="M24 4v14M24 30v14M4 24h14M30 24h14"/>
+  </g>
+  <text x="82" y="48" fill="#1d9bd1" font-family="Arial, sans-serif" font-size="28" font-weight="800">ROS 2</text>
+  <text x="84" y="67" fill="#53646d" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2">ROBOT OPERATING SYSTEM</text>
+</svg>

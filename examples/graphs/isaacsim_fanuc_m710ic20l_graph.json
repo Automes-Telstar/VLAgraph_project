@@ -1,0 +1,101 @@
+{
+  "nodes": [
+    {
+      "id": "fanuc-m710-file",
+      "type": "dataset_upload",
+      "position": { "x": 60, "y": 120 },
+      "data": {
+        "label": "FANUC M-710 LS 파일 업로드",
+        "datasetPath": "",
+        "datasetFormat": "ls",
+        "initialSettingsEnabled": true,
+        "initialSettingsPath": "",
+        "initialSettingsFormat": "ls",
+        "initialSettingsLabel": "FANUC M-710 초기 설정 LS"
+      }
+    },
+    {
+      "id": "fanuc-m710-parse",
+      "type": "fanuc_ls_parse",
+      "position": { "x": 390, "y": 120 },
+      "data": { "label": "Parse FANUC LS" }
+    },
+    {
+      "id": "fanuc-m710-prepare",
+      "type": "fanuc_m710_prepare",
+      "position": { "x": 730, "y": 120 },
+      "data": {
+        "label": "Prepare M-710 J1-J6",
+        "secondsPerFrame": 3,
+        "timingMode": "source_speed",
+        "jointPercentReferenceSec": 2,
+        "trajectoryTimeScale": 1.0,
+        "initialPoseDurationSec": 2.0,
+        "initialPoseHoldSec": 2.0,
+        "returnToInitialPoseOnComplete": true,
+        "initialPoseReturnSec": 2.0,
+        "previewOnly": false,
+        "enableExecution": true,
+        "solveCartesianIk": true,
+        "requireAllIk": false,
+        "cartesianPositionScale": 1.0,
+        "cartesianAxisSigns": "1,1,1",
+        "jointAxisSigns": "1,1,1,1,1,1",
+        "initialJointAxisSigns": "1,1,1,1,1,1",
+        "externalAxisVectors": { "E1": [-1, 0, 0] },
+        "externalAxisJointNames": { "E1": "externalAxisJoint" },
+        "externalAxisRootMotionEnabled": true,
+        "externalAxisAffectsIk": false,
+        "cartesianOrientationScale": 1.0,
+        "uframeTransforms": {},
+        "utoolTransforms": {},
+        "ikOrientationWeight": 0.75,
+        "ikMaxIterations": 220,
+        "ikPositionToleranceM": 0.001,
+        "ikOrientationToleranceDeg": 1.0,
+        "ikMaxJointDeltaDeg": 140.0
+      }
+    },
+    {
+      "id": "fanuc-m710-preview",
+      "type": "print",
+      "position": { "x": 1080, "y": 40 },
+      "data": { "label": "Safety Summary" }
+    },
+    {
+      "id": "fanuc-m710-execute",
+      "type": "robot_execute",
+      "position": { "x": 1080, "y": 240 },
+      "data": {
+        "label": "Execute FANUC M-710 in Isaac Sim",
+        "executor": "robot-executor",
+        "mode": "omniverse",
+        "dryRun": false,
+        "robotType": "articulated_arm",
+        "controllerMode": "joint_position",
+        "clientId": "fanuc_m710ic20l_01",
+        "omniverseEndpoint": "ws://172.16.110.116:9910/omniverse",
+        "omniverseUrl": "omniverse://localhost/Projects/FANUC_M710",
+        "omniverseStage": "/World",
+        "omniversePrimPath": "/World/GraphicViewer/Device/LASD/Robot/HFS1/HFS1_R01_R03/HFS1_7Axis_LH/lnk3/FANUC_M710/Robot",
+        "omniverseCommand": "apply_fanuc_trajectory",
+        "omniverseTimeoutSec": 30,
+        "omniverseWaitForResponse": true
+      }
+    },
+    {
+      "id": "fanuc-m710-result",
+      "type": "print",
+      "position": { "x": 1450, "y": 240 },
+      "data": { "label": "M-710 Execution Result" }
+    }
+  ],
+  "edges": [
+    { "id": "fanuc-m710-e-file-parse", "source": "fanuc-m710-file", "target": "fanuc-m710-parse", "sourceHandle": "dataset", "targetHandle": "dataset", "animated": true },
+    { "id": "fanuc-m710-e-initial-file-parse", "source": "fanuc-m710-file", "target": "fanuc-m710-parse", "sourceHandle": "initialSettings", "targetHandle": "initialSettings", "animated": true },
+    { "id": "fanuc-m710-e-parse-prepare", "source": "fanuc-m710-parse", "target": "fanuc-m710-prepare", "sourceHandle": "program", "targetHandle": "program", "animated": true },
+    { "id": "fanuc-m710-e-prepare-preview", "source": "fanuc-m710-prepare", "target": "fanuc-m710-preview", "sourceHandle": "summary", "targetHandle": "input", "animated": true },
+    { "id": "fanuc-m710-e-prepare-execute", "source": "fanuc-m710-prepare", "target": "fanuc-m710-execute", "sourceHandle": "action", "targetHandle": "action", "animated": true },
+    { "id": "fanuc-m710-e-execute-result", "source": "fanuc-m710-execute", "target": "fanuc-m710-result", "sourceHandle": "result", "targetHandle": "input", "animated": true }
+  ]
+}

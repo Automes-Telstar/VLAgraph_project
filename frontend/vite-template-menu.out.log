@@ -1,0 +1,55 @@
+
+> openvla-lego-graph-frontend@0.2.0 dev
+> vite --host 0.0.0.0 --port 9174
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m269[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m9174[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.16.110.116:[1m9174[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.27.112.1:[1m9174[22m/[39m
+[2mAM 11:18:34[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mAM 11:18:40[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mAM 11:18:44[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx, /src/components/layout/Inspector.tsx, /src/components/nodes/GenericNode.tsx, /src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mAM 11:19:13[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mAM 11:19:20[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Inspector.tsx[22m
+[2mPM 1:07:56[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Inspector.tsx[22m
+[2mPM 2:12:46[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:13:00[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:16:19[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mPM 2:16:29[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mPM 2:34:32[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx, /src/components/layout/Inspector.tsx, /src/components/nodes/GenericNode.tsx, /src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mPM 2:34:37[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx, /src/components/layout/Inspector.tsx, /src/components/nodes/GenericNode.tsx, /src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mPM 2:34:51[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Sidebar.tsx[22m
+[2mPM 2:34:56[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:35:04[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:35:23[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:35:38[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 2:36:18[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:36:41[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:37:05[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Inspector.tsx[22m
+[2mPM 2:37:17[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:46:41[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 2:46:56[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 2:47:06[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 2:51:10[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 2:51:15[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 2:51:23[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 2:51:28[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 4:14:11[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx, /src/components/layout/Inspector.tsx, /src/components/nodes/GenericNode.tsx, /src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mPM 4:14:21[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Sidebar.tsx[22m
+[2mPM 4:15:26[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 4:32:08[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx, /src/components/layout/Inspector.tsx, /src/components/nodes/GenericNode.tsx, /src/components/nodes/sensor/SensorInputNode.tsx[22m
+[2mPM 4:32:13[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 4:32:24[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 4:32:48[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Inspector.tsx[22m
+[2mPM 4:32:54[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/layout/Inspector.tsx[22m
+[2mPM 4:44:54[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 4:45:05[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 4:45:23[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 4:45:29[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m
+[2mPM 4:46:29[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 4:46:54[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 4:47:05[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 4:47:16[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/nodes/GenericNode.tsx[22m
+[2mPM 5:23:17[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/GraphPage.tsx[22m

@@ -1,0 +1,23 @@
+[
+  "tests/test_fanuc_nodes.py::test_export_isaaclab_trajectory_episode",
+  "tests/test_fanuc_nodes.py::test_fanuc_m710_initial_joint_axis_signs_are_opt_in",
+  "tests/test_fanuc_nodes.py::test_fanuc_m710_initial_settings_ls_seeds_ik_and_external_origin",
+  "tests/test_fanuc_nodes.py::test_fanuc_m710_tooldata_initial_settings_seed_and_frames",
+  "tests/test_fanuc_nodes.py::test_fanuc_number_parser_accepts_leading_decimal_values",
+  "tests/test_fanuc_nodes.py::test_fanuc_omy3m_retarget_defaults_to_mirrored_y_axis",
+  "tests/test_fanuc_nodes.py::test_m710_numerical_ik_recovers_reachable_pose",
+  "tests/test_fanuc_nodes.py::test_m710_usd_extracted_kinematics_match_zero_pose",
+  "tests/test_fanuc_nodes.py::test_omy3m_numerical_ik_recovers_reachable_position",
+  "tests/test_fanuc_nodes.py::test_parse_and_retarget_fanuc_ls",
+  "tests/test_fanuc_nodes.py::test_parse_fanuc_ls_preserves_external_axes",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_applies_e1_external_axis_to_cartesian_target",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_bridge_action",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_cartesian_l_uses_calibrated_uf_and_source_speed",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_direct_joint_axis_signs_are_opt_in",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_joint_replay_does_not_use_ik",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_relative_cartesian_defaults_to_unmirrored_y_axis",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_source_timing_can_be_scaled",
+  "tests/test_fanuc_nodes.py::test_prepare_fanuc_m710_source_timing_includes_wait_seconds",
+  "tests/test_isaacsim_bridge_resilience.py::test_backend_websocket_connection_failures_are_rate_limited",
+  "tests/test_isaacsim_bridge_resilience.py::test_missing_usd_stage_does_not_crash_update_or_resolution"
+]

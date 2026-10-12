@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+pillow
+numpy
+accelerate
+sentencepiece
+safetensors
+einops
+
+torch==2.2.2
+torchvision==0.17.2
+transformers==4.40.1
+tokenizers==0.19.1
+timm==0.9.10

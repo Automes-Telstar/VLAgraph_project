@@ -1,0 +1,2 @@
+C:\Users\0\Desktop\vlagraph\scripts\realsense_d435i_bridge.py:30: DeprecationWarning: 'mode' parameter for changing data types is deprecated and will be removed in Pillow 13 (2026-10-15)
+  image = Image.fromarray(np.asarray(depth_units).astype(np.uint16), mode="I;16")

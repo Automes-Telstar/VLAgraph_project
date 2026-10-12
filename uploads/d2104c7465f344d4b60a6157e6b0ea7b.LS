@@ -1,0 +1,86 @@
+/PROG  STYLE37
+/ATTR
+OWNER		= MNEDITOR;
+COMMENT		= "SmartMovHOM V4.0";
+PROG_SIZE	= 1476;
+CREATE		= DATE 16-12-08  TIME 01:18:12;
+MODIFIED	= DATE 16-12-08  TIME 01:22:54;
+FILE_NAME	= JOB00036;
+VERSION		= 0;
+LINE_COUNT	= 61;
+MEMORY_SIZE	= 1904;
+PROTECT		= READ_WRITE;
+TCD:  STACK_SIZE	= 0,
+      TASK_PRIORITY	= 50,
+      TIME_SLICE	= 0,
+      BUSY_LAMP_OFF	= 0,
+      ABORT_REQUEST	= 0,
+      PAUSE_REQUEST	= 0;
+DEFAULT_GROUP	= 1,*,*,*,*;
+CONTROL_CODE	= 00000000 00000000;
+/APPL
+  DISPENSE : TRUE ; 
+/MN
+   1:  !**************************** ;
+   2:  !SMART HOME ;
+   3:  !**************************** ;
+   4:   ;
+   5:  !Move safely HOME from any  ;
+   6:  !recorded REFPOS position. ;
+   7:   ;
+   8:  IF GO[1:ManualStyle]<>0,JMP LBL[1] ;
+   9:  GO[1:ManualStyle]=37 ;
+  10:  ECHO OPTION    ;
+  11:  LBL[1] ;
+  12:   ;
+  13:  IF DO[433:At HOME Pos     ]=ON,JMP LBL[100] ;
+  14:  IF DO[435:At REPAIR/BYPASS]=ON,JMP LBL[200] ;
+  15:  IF DO[434:At PURGE Pos    ]=ON,JMP LBL[300] ;
+  16:  IF DO[436:At GUN MAINT Pos]=ON,JMP LBL[400] ;
+  17:  IF DO[437:At USER Pos #1  ]=ON,JMP LBL[500] ;
+  18:  IF DO[438:At USER Pos #2  ]=ON,JMP LBL[600] ;
+  19:  !Not at a known position. ;
+  20:  JMP LBL[700] ;
+  21:   ;
+  22:  LBL[100:Already HOME] ;
+  23:  MESSAGE[ROBOT IS ALREADY HOME] ;
+  24:  JMP LBL[999] ;
+  25:   ;
+  26:  LBL[200:HOME FROM REPAIR] ;
+  27:  MESSAGE[MOVING HOME FROM REPAIR] ;
+  28:  SET SEGMENT(73) ;
+  29:  CALL HOMEFRMREPAIR    ;
+  30:  JMP LBL[999] ;
+  31:   ;
+  32:  LBL[300:HOME FROM PURGE] ;
+  33:  MESSAGE[MOVING HOME FROM PURGE] ;
+  34:  SET SEGMENT(75) ;
+  35:  CALL HOMEFRMPURGE    ;
+  36:  JMP LBL[999] ;
+  37:   ;
+  38:  LBL[400:HOME FROM GMAINT] ;
+  39:  MESSAGE[MOVING HOME FROM GMAINT] ;
+  40:  SET SEGMENT(77) ;
+  41:  CALL HOMEFRMGMAINT    ;
+  42:  JMP LBL[999] ;
+  43:   ;
+  44:  LBL[500:HOME FROM USER 1] ;
+  45:  MESSAGE[MOVING HOME FROM USER 1] ;
+  46:  SET SEGMENT(79) ;
+  47:  CALL HOMEFRMUSER1    ;
+  48:  JMP LBL[999] ;
+  49:   ;
+  50:  LBL[600:HOME FROM USER 2] ;
+  51:  MESSAGE[MOVING HOME FROM USER 2] ;
+  52:  SET SEGMENT(81) ;
+  53:  CALL HOMEFRMUSER2    ;
+  54:  JMP LBL[999] ;
+  55:   ;
+  56:  LBL[700:Invalid Position] ;
+  57:  MESSAGE[CANNOT MOVE HOME] ;
+  58:  MESSAGE[NOT AT A VALID REFPOS] ;
+  59:  ABORT ;
+  60:   ;
+  61:  LBL[999] ;
+/POS
+/END

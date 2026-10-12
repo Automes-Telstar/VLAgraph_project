@@ -1,0 +1,9 @@
+<svg width="360" height="92" viewBox="0 0 360 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="360" height="92" rx="14" fill="#F7F9F8"/>
+  <g transform="translate(18 19)">
+    <circle cx="27" cy="27" r="25" fill="#76B900"/>
+    <path d="M36 15C42.7 15 48 20.3 48 27C48 33.7 42.7 39 36 39H23V15H36ZM36 34C39.9 34 43 30.9 43 27C43 23.1 39.9 20 36 20H29V34H36Z" fill="white"/>
+  </g>
+  <text x="82" y="47" fill="#111827" font-family="Arial, sans-serif" font-size="34" font-weight="800">NVIDIA</text>
+  <text x="84" y="70" fill="#5F6D67" font-family="Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="3">GR00T</text>
+</svg>
