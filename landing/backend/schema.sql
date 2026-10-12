@@ -5,8 +5,20 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL UNIQUE CHECK (email = lower(email)),
     name TEXT,
     password_hash TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'approved' CHECK (status IN ('pending', 'approved', 'rejected')),
+    is_admin BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+ALTER TABLE users
+    ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'approved';
+
+ALTER TABLE users
+    ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT false;
+
+UPDATE users
+SET status = 'approved'
+WHERE status IS NULL OR status = '';
 
 CREATE TABLE IF NOT EXISTS password_reset_tokens (
     token_hash TEXT PRIMARY KEY,

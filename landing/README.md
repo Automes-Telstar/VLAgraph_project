@@ -12,7 +12,7 @@
    Copy-Item .env.example .env
    ```
 
-2. `.env`에서 `POSTGRES_PASSWORD`를 URL에 안전한 문자(영문자, 숫자, `-`, `_`)로 된 강한 값으로, `SECRET_KEY`를 32자 이상의 임의 값으로 바꿉니다. 비밀번호 재설정 메일의 링크 주소를 설정하려면 `FRONTEND_URL=http://localhost:5174`로 지정합니다.
+2. `.env`에서 `POSTGRES_PASSWORD`를 URL에 안전한 문자(영문자, 숫자, `-`, `_`)로 된 강한 값으로, `SECRET_KEY`를 32자 이상의 임의 값으로 바꿉니다. 비밀번호 재설정 메일의 링크 주소를 설정하려면 `FRONTEND_URL=http://localhost:5174`로 지정합니다. 초기 관리자 계정이 필요하면 `ADMIN_EMAILS`와 `ADMIN_INITIAL_PASSWORD`를 설정합니다. 가입자는 관리자의 승인이 있어야 로그인할 수 있습니다.
 3. 저장소 루트에서 랜딩 페이지, 인증 API, 데이터베이스를 시작합니다.
 
    ```powershell
@@ -126,6 +126,8 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 COOKIE_NAME=access_token
 COOKIE_SECURE=false
 FRONTEND_URL=http://localhost:5174
+ADMIN_EMAILS=admin@example.com
+ADMIN_INITIAL_PASSWORD=ChangeMe_123456
 SMTP_HOST=smtp.example.com
 SMTP_PORT=587
 SMTP_USERNAME=<SMTP_사용자명>

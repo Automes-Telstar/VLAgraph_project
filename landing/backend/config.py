@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     cookie_secure: bool = False
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
     frontend_url: str = "http://localhost:5173"
+    admin_emails: str = ""
+    admin_initial_password: str | None = None
     smtp_host: str | None = None
     smtp_port: int = 587
     smtp_username: str | None = None
@@ -38,6 +40,15 @@ class Settings(BaseSettings):
     def validate_expiration(cls, value: int) -> int:
         if value < 1:
             raise ValueError("ACCESS_TOKEN_EXPIRE_MINUTES must be positive")
+        return value
+
+    @field_validator("admin_initial_password")
+    @classmethod
+    def validate_admin_password(cls, value: str | None) -> str | None:
+        if value is None:
+            return value
+        if len(value) < 8:
+            raise ValueError("ADMIN_INITIAL_PASSWORD must be at least 8 characters")
         return value
 
     @field_validator("smtp_port")

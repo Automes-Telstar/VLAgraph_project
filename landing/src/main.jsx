@@ -141,6 +141,9 @@ function AuthModal({ mode, onClose, onModeChange, onAuthenticated }) {
         resetUrl.searchParams.delete('reset_token')
         window.history.replaceState({}, '', resetUrl)
         setSuccess('비밀번호를 변경했습니다. 새 비밀번호로 로그인해 주세요.')
+      } else if (isSignup) {
+        setSuccess('가입 신청이 접수되었습니다. 관리자 승인 후 로그인할 수 있습니다.')
+        setForm({ name: '', email: '', password: '', confirmPassword: '' })
       } else {
         onAuthenticated(payload.user || payload)
         onClose()

@@ -67,6 +67,8 @@ class UserResponse(BaseModel):
     id: UUID
     email: EmailStr
     name: str | None
+    status: str = "approved"
+    is_admin: bool = False
     created_at: datetime
 
 
@@ -138,23 +140,65 @@ def current_user(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired authentication token")
 
     user = connection.execute(
-        "SELECT id, email, name, created_at FROM users WHERE id = %s",
+        "SELECT id, email, name, status, is_admin, created_at FROM users WHERE id = %s",
         (user_id,),
     ).fetchone()
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    if user["status"] != "approved":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="This account is not approved yet")
     return user
+
+
+def require_admin(
+    user: Annotated[dict, Depends(current_user)],
+    connection: Connection,
+) -> dict:
+    account = connection.execute(
+        "SELECT is_admin FROM users WHERE id = %s",
+        (user["id"],),
+    ).fetchone()
+    if account is None or not account["is_admin"]:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required")
+    return user
+
+
+def ensure_admin_accounts(settings: Settings) -> None:
+    admin_emails = [email.strip().lower() for email in settings.admin_emails.split(",") if email.strip()]
+    if not admin_emails or not settings.admin_initial_password:
+        return
+
+    with psycopg.connect(settings.database_url) as connection:
+        for email in admin_emails:
+            account = connection.execute(
+                "SELECT id FROM users WHERE email = %s",
+                (email,),
+            ).fetchone()
+            if account is None:
+                connection.execute(
+                    """
+                    INSERT INTO users (email, name, password_hash, status, is_admin)
+                    VALUES (%s, %s, %s, 'approved', true)
+                    """,
+                    (email, email.split("@")[0], password_hash.hash(settings.admin_initial_password)),
+                )
+            else:
+                connection.execute(
+                    "UPDATE users SET is_admin = true, status = 'approved' WHERE id = %s",
+                    (account["id"],),
+                )
+        connection.commit()
 
 
 @app.on_event("startup")
 def configure_app() -> None:
     app.state.settings = get_settings()
+    ensure_admin_accounts(app.state.settings)
 
 
 @app.post("/api/auth/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(
     data: RegisterRequest,
-    response: Response,
     request: Request,
     connection: Connection,
 ) -> dict:
@@ -162,9 +206,9 @@ def register(
     try:
         user = connection.execute(
             """
-            INSERT INTO users (email, name, password_hash)
-            VALUES (%s, %s, %s)
-            RETURNING id, email, name, created_at
+            INSERT INTO users (email, name, password_hash, status)
+            VALUES (%s, %s, %s, 'pending')
+            RETURNING id, email, name, status, is_admin, created_at
             """,
             (email, data.name, password_hash.hash(data.password)),
         ).fetchone()
@@ -173,7 +217,6 @@ def register(
         connection.rollback()
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="An account with this email already exists")
 
-    set_auth_cookie(response, create_access_token(user["id"], request.app.state.settings), request.app.state.settings)
     return user
 
 
@@ -186,14 +229,18 @@ def login(
 ) -> dict:
     email = str(data.email).lower()
     user = connection.execute(
-        "SELECT id, email, name, created_at, password_hash FROM users WHERE email = %s",
+        "SELECT id, email, name, status, is_admin, created_at, password_hash FROM users WHERE email = %s",
         (email,),
     ).fetchone()
     if user is None or not password_hash.verify(data.password, user["password_hash"]):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
+    if user["status"] == "pending":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Your account is pending approval")
+    if user["status"] == "rejected":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Your account registration was rejected")
 
     set_auth_cookie(response, create_access_token(user["id"], request.app.state.settings), request.app.state.settings)
-    return {key: user[key] for key in ("id", "email", "name", "created_at")}
+    return {key: user[key] for key in ("id", "email", "name", "status", "is_admin", "created_at")}
 
 
 @app.post("/api/auth/logout", status_code=status.HTTP_204_NO_CONTENT)
@@ -203,6 +250,62 @@ def logout(response: Response, request: Request) -> None:
 
 @app.get("/api/auth/me", response_model=UserResponse)
 def me(user: Annotated[dict, Depends(current_user)]) -> dict:
+    return user
+
+
+@app.get("/api/auth/admin/users", response_model=list[UserResponse])
+def list_users(
+    admin: Annotated[dict, Depends(require_admin)],
+    connection: Connection,
+) -> list[dict]:
+    del admin
+    rows = connection.execute(
+        "SELECT id, email, name, status, is_admin, created_at FROM users ORDER BY created_at DESC"
+    ).fetchall()
+    return rows
+
+
+@app.post("/api/auth/admin/users/{user_id}/approve", response_model=UserResponse)
+def approve_user(
+    user_id: UUID,
+    admin: Annotated[dict, Depends(require_admin)],
+    connection: Connection,
+) -> dict:
+    del admin
+    user = connection.execute(
+        """
+        UPDATE users
+        SET status = 'approved'
+        WHERE id = %s
+        RETURNING id, email, name, status, is_admin, created_at
+        """,
+        (user_id,),
+    ).fetchone()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    connection.commit()
+    return user
+
+
+@app.post("/api/auth/admin/users/{user_id}/reject", response_model=UserResponse)
+def reject_user(
+    user_id: UUID,
+    admin: Annotated[dict, Depends(require_admin)],
+    connection: Connection,
+) -> dict:
+    del admin
+    user = connection.execute(
+        """
+        UPDATE users
+        SET status = 'rejected'
+        WHERE id = %s
+        RETURNING id, email, name, status, is_admin, created_at
+        """,
+        (user_id,),
+    ).fetchone()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    connection.commit()
     return user
 
 
