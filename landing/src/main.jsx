@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
 
@@ -386,6 +386,136 @@ function UserProfileModal({ user, onClose }) {
   )
 }
 
+function AdminApprovalPanel() {
+  const [users, setUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [busyUserId, setBusyUserId] = useState(null)
+  const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
+
+  const loadUsers = useCallback(async () => {
+    setIsLoading(true)
+    setError('')
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/admin/users`, {
+        credentials: 'include'
+      })
+      const payload = await response.json().catch(() => ({}))
+      if (!response.ok) {
+        throw new Error(payload.detail || '회원 목록을 불러오지 못했습니다.')
+      }
+      setUsers(Array.isArray(payload) ? payload : [])
+    } catch (requestError) {
+      setError(requestError.message || '서버에 연결할 수 없습니다.')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    loadUsers()
+  }, [loadUsers])
+
+  const updateUserStatus = async (user, action) => {
+    setBusyUserId(user.id)
+    setError('')
+    setNotice('')
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/auth/admin/users/${encodeURIComponent(user.id)}/${action}`,
+        { method: 'POST', credentials: 'include' }
+      )
+      const payload = await response.json().catch(() => ({}))
+      if (!response.ok) {
+        throw new Error(payload.detail || '회원 상태를 변경하지 못했습니다.')
+      }
+      setUsers((currentUsers) => currentUsers.map((item) => (
+        item.id === payload.id ? payload : item
+      )))
+      setNotice(`${user.email} 계정을 ${action === 'approve' ? '승인' : '거절'}했습니다.`)
+    } catch (requestError) {
+      setError(requestError.message || '서버에 연결할 수 없습니다.')
+    } finally {
+      setBusyUserId(null)
+    }
+  }
+
+  const pendingCount = users.filter((item) => item.status === 'pending').length
+
+  return (
+    <section className="admin-panel" aria-labelledby="admin-panel-title">
+      <div className="admin-panel-header">
+        <div>
+          <div className="section-tag">ACCOUNT ADMINISTRATION</div>
+          <h2 id="admin-panel-title">회원 가입 승인</h2>
+          <p>가입 신청을 확인하고 서비스 이용을 승인하거나 거절합니다.</p>
+        </div>
+        <button className="admin-refresh-button" type="button" onClick={loadUsers} disabled={isLoading}>
+          {isLoading ? '불러오는 중...' : '목록 새로고침'}
+        </button>
+      </div>
+
+      <div className="admin-summary" aria-live="polite">
+        <span>전체 회원 <strong>{users.length}</strong></span>
+        <span>승인 대기 <strong>{pendingCount}</strong></span>
+      </div>
+
+      {error && <div className="auth-error admin-feedback" role="alert">{error}</div>}
+      {notice && <div className="auth-success admin-feedback" role="status">{notice}</div>}
+
+      {isLoading ? (
+        <div className="admin-empty">회원 목록을 불러오는 중입니다.</div>
+      ) : users.length === 0 && !error ? (
+        <div className="admin-empty">등록된 회원이 없습니다.</div>
+      ) : users.length > 0 && (
+        <div className="admin-user-list">
+          {users.map((account) => (
+            <article className="admin-user-row" key={account.id}>
+              <div className="admin-user-info">
+                <strong>{account.name || '이름 미등록'}</strong>
+                <span>{account.email}</span>
+                <small>
+                  가입일 {new Date(account.created_at).toLocaleDateString('ko-KR')}
+                  {account.is_admin ? ' · 관리자' : ''}
+                </small>
+              </div>
+              <div className="admin-user-controls">
+                <span className={`admin-status admin-status-${account.status}`}>
+                  {account.status === 'pending'
+                    ? '승인 대기'
+                    : account.status === 'approved'
+                      ? '승인됨'
+                      : '거절됨'}
+                </span>
+                {account.status !== 'approved' && (
+                  <button
+                    className="admin-approve-button"
+                    type="button"
+                    onClick={() => updateUserStatus(account, 'approve')}
+                    disabled={busyUserId === account.id}
+                  >
+                    {busyUserId === account.id ? '처리 중...' : '승인'}
+                  </button>
+                )}
+                {account.status === 'pending' && (
+                  <button
+                    className="admin-reject-button"
+                    type="button"
+                    onClick={() => updateUserStatus(account, 'reject')}
+                    disabled={busyUserId === account.id}
+                  >
+                    {busyUserId === account.id ? '처리 중...' : '거절'}
+                  </button>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  )
+}
+
 function App() {
   const [authMode, setAuthMode] = useState(() => (
     new URLSearchParams(window.location.search).has('reset_token') ? 'reset' : null
@@ -470,6 +600,7 @@ function App() {
 
       {authLoaded && user && (
         <main className="page dashboard-page">
+          {user.is_admin && <AdminApprovalPanel />}
           <Reveal>
             <section className="demo-entry">
               <div className="hero-side">

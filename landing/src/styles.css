@@ -1090,3 +1090,189 @@ img { display: block; max-width: 100%; }
   transform: none;
   transition: none;
 }
+
+.admin-panel {
+  margin: 32px 0 72px;
+  padding: 28px;
+  border: 1px solid rgba(116, 211, 255, 0.2);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, rgba(18, 38, 58, 0.78), rgba(20, 19, 52, 0.72)),
+    rgba(14, 20, 24, 0.8);
+  box-shadow: var(--shadow);
+}
+
+.admin-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-panel-header h2 {
+  margin: 10px 0 6px;
+  color: white;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  letter-spacing: -0.06em;
+}
+
+.admin-panel-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.admin-refresh-button,
+.admin-approve-button,
+.admin-reject-button {
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 9px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-refresh-button:disabled,
+.admin-approve-button:disabled,
+.admin-reject-button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.admin-summary {
+  display: flex;
+  gap: 10px;
+  margin: 22px 0 14px;
+}
+
+.admin-summary span {
+  padding: 8px 12px;
+  border: 1px solid rgba(164, 215, 239, 0.14);
+  border-radius: 999px;
+  color: rgba(235, 245, 255, 0.72);
+  background: rgba(2, 12, 22, 0.34);
+  font-size: 0.78rem;
+}
+
+.admin-summary strong {
+  margin-left: 5px;
+  color: #8ceaff;
+}
+
+.admin-feedback {
+  margin: 12px 0;
+}
+
+.admin-empty {
+  padding: 28px 16px;
+  border: 1px dashed rgba(164, 215, 239, 0.2);
+  border-radius: 12px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.admin-user-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+  border: 1px solid rgba(164, 215, 239, 0.14);
+  border-radius: 12px;
+  background: rgba(2, 12, 22, 0.38);
+}
+
+.admin-user-info {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.admin-user-info strong {
+  color: #f2f8ff;
+  font-size: 0.9rem;
+}
+
+.admin-user-info span,
+.admin-user-info small {
+  overflow-wrap: anywhere;
+  color: rgba(235, 245, 255, 0.66);
+  font-size: 0.78rem;
+}
+
+.admin-user-info small {
+  color: rgba(235, 245, 255, 0.46);
+}
+
+.admin-user-controls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.admin-status {
+  padding: 6px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-status-pending {
+  color: #ffdc8a;
+  background: rgba(161, 110, 17, 0.2);
+}
+
+.admin-status-approved {
+  color: #a8f5c2;
+  background: rgba(22, 90, 54, 0.24);
+}
+
+.admin-status-rejected {
+  color: #ffb4b4;
+  background: rgba(114, 20, 34, 0.25);
+}
+
+.admin-approve-button {
+  border-color: rgba(108, 223, 154, 0.28);
+  color: #a8f5c2;
+}
+
+.admin-reject-button {
+  border-color: rgba(255, 125, 125, 0.24);
+  color: #ffb4b4;
+}
+
+@media (max-width: 640px) {
+  .admin-panel {
+    margin: 22px 0 48px;
+    padding: 20px 16px;
+  }
+
+  .admin-panel-header {
+    flex-direction: column;
+  }
+
+  .admin-user-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-user-controls {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
