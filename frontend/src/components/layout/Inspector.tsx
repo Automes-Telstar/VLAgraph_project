@@ -1163,27 +1163,12 @@ export default function Inspector({
   selectedNode,
   nodeCount,
   edgeCount,
-  runOverview,
-  storyEntries,
   logs,
   onNodeDataChange,
 }: {
   selectedNode: Node | null;
   nodeCount: number;
   edgeCount: number;
-  runOverview: {
-    state: "idle" | "running" | "success" | "warning" | "error";
-    title: string;
-    detail: string;
-  };
-  storyEntries: Array<{
-    id: string;
-    state: "idle" | "running" | "success" | "warning" | "error";
-    title: string;
-    detail: string;
-    summary: string;
-    nodeLabel?: string;
-  }>;
   logs: string[];
   onNodeDataChange: (nodeId: string, key: string, value: unknown) => void;
 }) {
@@ -1220,18 +1205,24 @@ export default function Inspector({
 
   return (
     <aside className="inspector">
-      <h2>Inspector</h2>
+      <div className="inspector-heading">
+        <div>
+          <span className="workspace-eyebrow">PROPERTIES</span>
+          <h2>노드 속성</h2>
+        </div>
+        <span className="inspector-heading-icon">×</span>
+      </div>
 
       <div className="panel-card">
-        <div className="panel-title">Selected Node</div>
+        <div className="panel-title">선택한 노드</div>
         <div className="panel-body strong">
-          {selectedNode ? (selectedNode.data?.label as string) ?? selectedNode.id : "No node selected"}
+          {selectedNode ? (selectedNode.data?.label as string) ?? selectedNode.id : "노드를 선택하세요"}
         </div>
       </div>
 
       {selectedNode && (
         <div className="panel-card">
-          <div className="panel-title">Node Params</div>
+          <div className="panel-title">노드 설정</div>
               {(data.lastSummary || data.lastDetail) && (
             <div className={`run-summary-box tone-${String(data.status ?? "idle")}`}>
               <div className="run-summary-title">{String(data.lastSummary ?? "최근 실행 결과")}</div>
@@ -1306,50 +1297,23 @@ export default function Inspector({
       )}
 
       <div className="panel-card">
-        <div className="panel-title">Graph Stats</div>
+        <div className="panel-title">그래프 요약</div>
         <div className="panel-body">
-          <div>Nodes: {nodeCount}</div>
-          <div>Edges: {edgeCount}</div>
+          <div>노드 {nodeCount}개</div>
+          <div>연결 {edgeCount}개</div>
         </div>
       </div>
 
       <div className="panel-card">
-        <div className="panel-title">Run Summary</div>
-        <div className="panel-body">
-          <div className={`status-pill tone-${runOverview.state}`}>{runOverview.state.toUpperCase()}</div>
-          <div className="run-summary-title">{runOverview.title}</div>
-          <div className="run-summary-detail">{runOverview.detail}</div>
-        </div>
-      </div>
-
-      <div className="panel-card">
-        <div className="panel-title">Execution Story</div>
-        <div className="panel-body story-list">
-          {storyEntries.length === 0 ? (
-            <div className="story-empty">그래프 실행 후 단계별 설명이 여기에 표시됩니다.</div>
-          ) : (
-            storyEntries.map((entry) => (
-              <div key={entry.id} className={`story-entry tone-${entry.state}`}>
-                <div className="story-kicker">{entry.nodeLabel ?? entry.summary}</div>
-                <div className="story-title">{entry.title}</div>
-                <div className="story-detail">{entry.detail}</div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
-      <div className="panel-card">
-        <div className="panel-title">Technical Log</div>
+        <div className="panel-title">실행 로그</div>
         <div className="panel-body log-box">
           {logs.length === 0
-            ? <div>Graph ready. Waiting for execution.</div>
+            ? <div>그래프가 준비되었습니다. 실행을 기다리는 중입니다.</div>
             : logs.map((log, i) => <div key={i}>{log}</div>)}
         </div>
       </div>
     </aside>
   );
 }
-
 
 

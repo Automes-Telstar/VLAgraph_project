@@ -4284,87 +4284,181 @@ export default function GraphPage() {
     []
   );
 
+  const previewNode = useMemo(
+    () =>
+      [...nodes].reverse().find((node) => {
+        const data = node.data as Record<string, unknown> | undefined;
+        return Boolean(data?.capturedFrame || data?.lastImageFrame);
+      }) ?? null,
+    [nodes]
+  );
+  const previewData = previewNode?.data as Record<string, unknown> | undefined;
+  const previewImage = String(previewData?.capturedFrame || previewData?.lastImageFrame || "");
+  const previewDepthImage = String(previewData?.lastDepthImageFrame || "");
+  const previewLabel = String(previewData?.label || humanizeNodeType(previewNode?.type ?? ""));
+
   return (
     <div className="app-shell">
       <Sidebar onAddNode={onAddNode} />
 
       <main className="canvas-shell">
         <div className="topbar">
-          <label className="template-picker">
-            <span>Graph Template</span>
-            <select
-              value={graphTemplateId}
-              disabled={runtimeSessionId !== null && ACTIVE_RUNTIME_STATES.has(runtimeStatus)}
-              onChange={(event) => applyGraphTemplate(event.target.value as GraphTemplateId)}
+          <div className="workspace-heading">
+            <div className="workspace-brand">VLA<span>graph</span></div>
+            <div className="workspace-heading-copy">
+              <strong>로봇 작업 그래프</strong>
+              <span>Build · Connect · Run — From Vision to Action</span>
+            </div>
+          </div>
+          <div className="workspace-actions">
+            <label className="template-picker">
+              <span>템플릿</span>
+              <select
+                value={graphTemplateId}
+                disabled={runtimeSessionId !== null && ACTIVE_RUNTIME_STATES.has(runtimeStatus)}
+                onChange={(event) => applyGraphTemplate(event.target.value as GraphTemplateId)}
+              >
+                {GRAPH_TEMPLATE_OPTIONS.map((template) => (
+                  <option key={template.id} value={template.id}>
+                    {template.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              className="primary-btn"
+              onClick={onRun}
+              disabled={isRunStarting || (runtimeSessionId !== null && ACTIVE_RUNTIME_STATES.has(runtimeStatus))}
             >
-              {GRAPH_TEMPLATE_OPTIONS.map((template) => (
-                <option key={template.id} value={template.id}>
-                  {template.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            className="primary-btn"
-            onClick={onRun}
-            disabled={isRunStarting || (runtimeSessionId !== null && ACTIVE_RUNTIME_STATES.has(runtimeStatus))}
-          >
-            {isRunStarting ? "Starting..." : "Run Graph"}
-          </button>
-          <button
-            className="secondary-btn"
-            onClick={onCancelRun}
-            disabled={!runtimeSessionId || !ACTIVE_RUNTIME_STATES.has(runtimeStatus)}
-          >
-            {isRunCancelling || runtimeStatus === "cancelling" ? "Cancelling..." : "Cancel Run"}
-          </button>
-          <button className="secondary-btn">Save</button>
+              {isRunStarting ? "시작 중..." : "실행하기"}
+            </button>
+            <button
+              className="secondary-btn"
+              onClick={onCancelRun}
+              disabled={!runtimeSessionId || !ACTIVE_RUNTIME_STATES.has(runtimeStatus)}
+            >
+              {isRunCancelling || runtimeStatus === "cancelling" ? "취소 중..." : "실행 취소"}
+            </button>
+            <button className="secondary-btn">저장</button>
+          </div>
         </div>
 
-        <section className={`run-strip tone-${runOverview.state}`}>
-          <div className="run-hero">
-            <div className={`status-pill tone-${runOverview.state}`}>{toneLabel(runOverview.state)}</div>
-            <h2>{runOverview.title}</h2>
-            <p>{runOverview.detail}</p>
+        <section className="graph-titlebar">
+          <div>
+            <span className="workspace-eyebrow">WORKFLOW DESIGNER</span>
+            <h1>{GRAPH_TEMPLATE_OPTIONS.find((template) => template.id === graphTemplateId)?.label ?? "새 그래프"}</h1>
+            <p>{nodes.length}개 노드 · {edges.length}개 연결</p>
           </div>
-
-          <div className="metric-grid">
-            {runOverview.metrics.map((metric) => (
-              <div key={metric.label} className={`metric-card tone-${metric.tone ?? "idle"}`}>
-                <div className="metric-label">{metric.label}</div>
-                <div className="metric-value">{metric.value}</div>
-                <div className="metric-detail">{metric.detail}</div>
-              </div>
-            ))}
-          </div>
+          <div className={`status-pill tone-${runOverview.state}`}>{toneLabel(runOverview.state)}</div>
         </section>
 
-        <div className="flow-wrap"> 
-          <ReactFlow key={flowKey} nodes={renderedNodes} 
+        <div className="flow-wrap">
+          <ReactFlow key={flowKey} nodes={renderedNodes}
             edges={edges}
-            onNodesChange={onNodesChange} 
-            onEdgesChange={onEdgesChange} 
-            onConnect={onConnect} 
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
             isValidConnection={isValidConnection}
             onNodeClick={(_, node) => setSelectedNode(node)}
-            nodeTypes={nodeTypes} 
+            nodeTypes={nodeTypes}
             nodesConnectable
             connectionRadius={32}
-            fitView 
+            fitView
           >
-            <Background gap={24} size={1} color="#334155" />
+            <Background gap={24} size={1} color="#243a55" />
             <Controls />
             {minimap}
           </ReactFlow>
         </div>
+
+        <section className="workspace-dock">
+          <div className="output-panel">
+            <section className={`run-strip tone-${runOverview.state}`}>
+              <div className="run-hero">
+                <div className="run-title-row">
+                  <div className={`status-pill tone-${runOverview.state}`}>{toneLabel(runOverview.state)}</div>
+                  <h2>{runOverview.title}</h2>
+                </div>
+                <p>{runOverview.detail}</p>
+              </div>
+
+              <div className="metric-grid">
+                {runOverview.metrics.map((metric) => (
+                  <div key={metric.label} className={`metric-card tone-${metric.tone ?? "idle"}`}>
+                    <div className="metric-label">{metric.label}</div>
+                    <div className="metric-value">{metric.value}</div>
+                    <div className="metric-detail">{metric.detail}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+            <section className="dock-story-panel">
+              <div className="dock-panel-heading">
+                <strong>실행 결과</strong>
+                <span>{storyEntries.length} 단계</span>
+              </div>
+              <div className="dock-story-list">
+                {storyEntries.length === 0 ? (
+                  <div className="story-empty">그래프를 실행하면 단계별 결과가 여기에 표시됩니다.</div>
+                ) : (
+                  storyEntries.map((entry) => (
+                    <article key={entry.id} className={`dock-story-entry tone-${entry.state}`}>
+                      <span className="dock-story-dot" />
+                      <div>
+                        <strong>{entry.title}</strong>
+                        <p>{entry.detail}</p>
+                      </div>
+                    </article>
+                  ))
+                )}
+              </div>
+            </section>
+          </div>
+
+          <section className="preview-panel">
+            <div className="dock-panel-heading">
+              <div>
+                <strong>실시간 영상 / 시뮬레이션</strong>
+                <span className="preview-source">{previewNode ? previewLabel : "센서 입력 대기 중"}</span>
+              </div>
+              <span className={`preview-live-indicator${previewImage ? " is-live" : ""}`}>
+                {previewImage ? "연결됨" : "대기"}
+              </span>
+            </div>
+            <div className="preview-image-wrap">
+              {previewImage ? (
+                <img src={previewImage} alt={`${previewLabel} 센서 프리뷰`} />
+              ) : (
+                <div className="preview-placeholder">
+                  <span className="preview-placeholder-icon">◉</span>
+                  <strong>센서 영상을 기다리는 중</strong>
+                  <span>카메라 또는 원격 이미지 노드를 그래프에 추가하세요.</span>
+                </div>
+              )}
+            </div>
+            <div className="preview-side-list">
+              <div className="preview-side-card">
+                <span>Depth / RealSense</span>
+                {previewDepthImage ? (
+                  <img src={previewDepthImage} alt="RealSense depth 프리뷰" />
+                ) : (
+                  <div className="preview-side-empty">Depth 입력 대기</div>
+                )}
+              </div>
+              <div className="preview-side-card preview-graph-stats">
+                <span>그래프 상태</span>
+                <strong>{nodes.length} Nodes</strong>
+                <strong>{edges.length} Connections</strong>
+              </div>
+            </div>
+          </section>
+        </section>
       </main>
 
       <Inspector
         selectedNode={selectedNode}
         nodeCount={nodes.length}
         edgeCount={edges.length}
-        runOverview={runOverview}
-        storyEntries={storyEntries}
         logs={logs}
         onNodeDataChange={onNodeDataChange}
       />
